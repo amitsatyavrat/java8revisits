@@ -3,6 +3,8 @@ package com.java.javabhakt.streamconepts;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RevisitJava8StreamConcepts {
 
@@ -27,6 +29,35 @@ public class RevisitJava8StreamConcepts {
 	        .sorted(Comparator.comparing(Employee::getSalary))
 	        .sorted(Comparator.comparing(Employee::getRating))
 	        .forEach(e -> System.out.println(e.getEmpId() + "-" + e.getSalary() +"-"+ e.getRating()));
+		 
+		 //match
+	      boolean isSalary = empList.stream()
+	                  .allMatch(e -> e.getSalary() > 1000);
+	          System.out.println(isSalary);
+	          
+	     //max
+	          empList.stream()
+	          .max(Comparator.comparing(Employee::getSalary))
+	          .ifPresent(System.out::println);
+	          
+	     //max rating
+	          empList.stream()
+	          .max(Comparator.comparing(Employee::getRating))
+	          .ifPresent(System.out::println);
+	          
+	    //min
+	          empList.stream()
+	          .min(Comparator.comparing(Employee::getSalary))
+	          .ifPresent(System.out::println);
+	          
+	    //group by
+	          Map<String, List<Employee>> employeesBygender = empList.stream()
+	                  .collect(Collectors.groupingBy(Employee::getGender));
+	employeesBygender.forEach(((g,e)->{
+	              System.out.println(g);
+	              e.forEach(System.out::println);
+	          }));
+	 
 		
 	}
 	
